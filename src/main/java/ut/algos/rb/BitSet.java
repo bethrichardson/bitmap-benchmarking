@@ -2,41 +2,47 @@ package ut.algos.rb;
 
 
 public class BitSet {
-    protected int set[];
+    protected long set[];
+    private int bitsPerItem = Short.SIZE;
     private int cardinality;
 
     public BitSet(int max_size) {
-        set = new int[max_size];
+        set = new long[max_size];
         cardinality = 0;
     }
 
+    public boolean contains(short x) {
+        /*
+          Paper mentions that modulo and division are performed in a single
+          instruction here.
+         */
+        return (set[x / Long.SIZE] & (1L << (x % Long.SIZE))) != 0;
+    }
+
+
     public int getCardinality() {
-        int ret = 0;
-        for (int i: set) {
-            ret += Integer.bitCount(i);
+        return cardinality;
+    }
+
+    public void add(short x) {
+        if (!contains(x)) {
+            set[x / Long.SIZE] |= (1L << (x % Long.SIZE));
+            cardinality++;
         }
-        return ret;
     }
 
-    public void add(int x) {
-        int bit = x % 32;
-        int idx = x / 32;
-        int mask = 0x01 << bit;
-        set[idx] |= (0x01 << bit);
+    public void remove(short x) {
+        if (contains(x)) {
+            set[x / Long.SIZE] &= ~(1L << (x % Long.SIZE));
+            cardinality--;
+        }
     }
 
-    public void remove(int x) {
-        int bit = x % 32;
-        int idx = x / 32;
-        int mask = (0x01 << bit);
-        set[idx] &= ~mask;
-    }
-
-    public boolean inSet(int x) {
-        int bit = x % 32;
-        int idx = x / 32;
-        int ret =  (set[idx] & (0x01 << bit));
-        return ret != 0;
+    public void recomputeCardinality() {
+        cardinality = 0;
+        for (int i = 0; i < set.length; i++) {
+            cardinality += Long.bitCount(set[i]);
+        }
     }
 
     public void and(BitSet b) {
@@ -44,6 +50,7 @@ public class BitSet {
         for (int i = 0; i < smallest; i++) {
             set[i] &= b.set[i];
         }
+        recomputeCardinality();
     }
 
     public void or(BitSet b) {
@@ -51,14 +58,16 @@ public class BitSet {
         for (int i = 0; i< smallest; i++) {
             set[i] |= b.set[i];
         }
+        recomputeCardinality();
     }
 
     public static void main(String []args) {
         BitSet b = new BitSet(100);
-        b.add(0);
-        b.add(1);
-        b.inSet(0);
-        b.remove(0);
-        b.remove(1);
+        for (short x = 0; x < 19; x++) {
+            if (x % 2 != 0)
+                b.add(x);
+        }
+
+        System.out.println(b.getCardinality());
     }
 }

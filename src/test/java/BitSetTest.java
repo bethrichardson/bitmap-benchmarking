@@ -9,18 +9,35 @@ public class BitSetTest {
     @Test
     public void testAdd() {
         BitSet b = new BitSet(100);
-        for (int i = 0; i < 100 * 32; i++) {
-            assertFalse(b.inSet(i));
+        for (short i = 0; i < 100; i++) {
+            assertFalse(b.contains(i));
             b.add(i);
-            assertTrue(b.inSet(i));
+            assertTrue(b.contains(i));
         }
+    }
+
+    @Test
+    public void testRemove() {
+        BitSet b = new BitSet(100);
+        for (short i = 0; i < 100; i++) {
+            assertFalse(b.contains(i));
+            b.add(i);
+            assertTrue(b.contains(i));
+        }
+
+        for (short i = 0; i < 100; i++) {
+            assertTrue(b.contains(i));
+            b.remove(i);
+            assertFalse(b.contains(i));
+        }
+        assertEquals(0, b.getCardinality());
     }
 
     @Test
     public void testCardinality() {
         BitSet b = new BitSet(100);
         assertEquals(b.getCardinality(), 0);
-        for (int i = 0; i < 100; i++) {
+        for (short i = 0; i < 100; i++) {
             if (i % 2 == 0)
                 b.add(i);
         }
@@ -34,7 +51,7 @@ public class BitSetTest {
         BitSet b1 = new BitSet(100);
         BitSet b2 = new BitSet(100);
 
-        for (int i = 0; i < 100; i++) {
+        for (short i = 0; i < 100; i++) {
             if (i % 2 == 0)
                 b1.add(i);
             else
@@ -54,7 +71,7 @@ public class BitSetTest {
         BitSet b1 = new BitSet(100);
         BitSet b2 = new BitSet(100);
 
-        for (int i = 0; i < 100; i++) {
+        for (short i = 0; i < 100; i++) {
             if (i % 2 == 0)
                 b1.add(i);
             else
