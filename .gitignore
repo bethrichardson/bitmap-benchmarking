@@ -1,0 +1,11 @@
+target/
+
+# IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+*.idsa
+
+# OS
+.DS_Store
