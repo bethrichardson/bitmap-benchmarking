@@ -13,7 +13,7 @@ and in RoaringBitmap and our own implementation of BitSet as `and` and `or`.
 For more information on RoaringBitmaps, see [http://roaringbitmap.org/](http://roaringbitmap.org/).
 
 ## Our Presentation
-View our presentation on this topic[here](https://docs.google.com/presentation/d/18YLjPI3XuSxi5RH0wECcyxcxbBoSzEDgBoJcUyeDTeQ/edit?usp=sharing).
+View our presentation on this topic [here](https://docs.google.com/presentation/d/18YLjPI3XuSxi5RH0wECcyxcxbBoSzEDgBoJcUyeDTeQ/edit?usp=sharing).
 
 ## Our Benchmarks 
 Our latest benchmark values are available [here](https://microbenchmarks.appspot.com/runs/9381e632-5f18-44e7-a7bc-4c0877164d90)
